@@ -7,6 +7,8 @@ Created on Sat Oct 28 03:46:09 2023
 
 import spacy
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 # Path to IMDb reviews dataset file
 dataset_path = 'imdb_dataset.csv'
@@ -34,9 +36,19 @@ for i, text in enumerate(data['review']):
 # Now, the 'tokenized_text' column contains lists of tokens for each review.
 print(data['tokenized_text'].head())
 
+
 # Apply lemmatization to the tokenized text
 data['lemmatized_text'] = data['tokenized_text'].apply(lambda tokens: [token.lemma_ for token in nlp(" ".join(tokens))])
 
 # Now, the 'lemmatized_text' column contains lists of lemmatized tokens for each review.
 print(data['lemmatized_text'].head())
+
+# Create a TF-IDF vectorizer
+tfidf_vectorizer = TfidfVectorizer(max_features=5000)  # You can adjust the max_features as needed
+
+# Fit and transform the text data
+tfidf_matrix = tfidf_vectorizer.fit_transform(data['lemmatized_text'].apply(lambda x: ' '.join(x)))
+
+# You now have a TF-IDF matrix containing numerical representations of your text data
+print(tfidf_matrix.shape)
 
