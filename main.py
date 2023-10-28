@@ -13,6 +13,9 @@ dataset_path = 'imdb_dataset.csv'
 
 data = pd.read_csv(dataset_path)
 
+# Use only part of the data during development in order to work faster
+data = data.iloc[0:1000, :]
+
 # Load the language model
 nlp = spacy.load("en_core_web_sm")
 
