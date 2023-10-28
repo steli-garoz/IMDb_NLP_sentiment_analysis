@@ -34,3 +34,9 @@ for i, text in enumerate(data['review']):
 # Now, the 'tokenized_text' column contains lists of tokens for each review.
 print(data['tokenized_text'].head())
 
+# Apply lemmatization to the tokenized text
+data['lemmatized_text'] = data['tokenized_text'].apply(lambda tokens: [token.lemma_ for token in nlp(" ".join(tokens))])
+
+# Now, the 'lemmatized_text' column contains lists of lemmatized tokens for each review.
+print(data['lemmatized_text'].head())
+
